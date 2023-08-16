@@ -1,0 +1,49 @@
+﻿using NModbus;
+using System;
+using System.Collections.Generic;
+using System.IO.Ports;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ModbusWPF
+{
+    public static class ModbusFactoryExtensions
+    {
+        public static IModbusSerialMaster CreateRtuMaster(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateRtuMaster(adapter);
+        }
+
+        public static IModbusRtuTransport CreateRtuTransport(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateRtuTransport(adapter);
+        }
+
+        public static IModbusSlaveNetwork CreateRtuSlaveNetwork(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateRtuSlaveNetwork(adapter);
+        }
+
+        public static IModbusSerialMaster CreateAsciiMaster(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateAsciiMaster(adapter);
+        }
+
+        public static IModbusAsciiTransport CreateAsciiTransport(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateAsciiTransport(adapter);
+        }
+
+        public static IModbusSlaveNetwork CreateAsciiSlaveNetwork(this IModbusFactory factory, SerialPort serialPort)
+        {
+            var adapter = new SerialPortAdapter(serialPort);
+            return factory.CreateAsciiSlaveNetwork(adapter);
+        }
+    }
+}
