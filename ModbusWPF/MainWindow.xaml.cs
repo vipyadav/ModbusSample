@@ -31,7 +31,9 @@ namespace ModbusWPF
         public MainWindow()
         {
             InitializeComponent();
-
+            // Get a list of serial port names.
+            string[] ports = SerialPort.GetPortNames();
+            comPorts.ItemsSource = ports;
         }
 
         /// <summary>
@@ -70,28 +72,27 @@ namespace ModbusWPF
         /// </summary>
         public void ModbusSerialRtuMasterWriteRegisters(object sender, RoutedEventArgs e)
         {
-            Task.Run(() =>
+            using (port = new SerialPort(comPorts.SelectedItem.ToString()))
             {
-                port = new SerialPort("COM1");
-                {
-                    // configure serial port
-                    port.BaudRate = 9600;
-                    port.DataBits = 8;
-                    port.Parity = Parity.None;
-                    port.StopBits = StopBits.One;
-                    port.Open();
+                // configure serial port
+                port.BaudRate = 9600;
+                port.DataBits = 8;
+                port.Parity = Parity.None;
+                port.StopBits = StopBits.One;
+                port.Open();
 
-                    var factory = new ModbusFactory();
-                    IModbusMaster master = factory.CreateRtuMaster(port);
+                var factory = new ModbusFactory();
+                IModbusMaster master = factory.CreateRtuMaster(port);
 
-                    byte slaveId = 1;
-                    ushort startAddress = 1;
-                    ushort[] registers = new ushort[] { 1, 2, 3 };
+                byte slaveId = 1;
+                ushort startAddress = ushort.Parse(RegisterAddress3.Text);
+                var registerValues = RegisterValues3.Text;
+                ushort[] registers = registerValues.Split(',').Select(ushort.Parse).ToArray(); //new ushort[] { 1, 2, 3 }; 
 
-                    // write three registers
-                    master.WriteMultipleRegisters(slaveId, startAddress, registers);
-                }
-            });
+                // write three registers
+                master.WriteMultipleRegisters(slaveId, startAddress, registers);
+            }
+
         }
 
         public void ModbusSocketSerialMasterWriteRegisters(object sender, RoutedEventArgs e)
@@ -143,7 +144,7 @@ namespace ModbusWPF
                     IModbusMaster master = factory.CreateMaster(sock);
 
                     byte slaveId = 1;
-                    ushort startAddress = 1;
+                    ushort startAddress = 100;
                     ushort numInputs = ushort.Parse(numberOfPoints.Text);
 
                     ushort[] registers = master.ReadHoldingRegisters(slaveId, startAddress, numInputs);
@@ -157,7 +158,7 @@ namespace ModbusWPF
                     ReadRegisterValues.Text = registersValues;
                 }
 
-                 
+
             }
             catch (Exception ex)
             {

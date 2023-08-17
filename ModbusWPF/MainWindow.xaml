@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModbusWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900">
     <Window.Resources>
         <!--Control colors.-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>
@@ -210,8 +210,35 @@
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="1" Height="50" Width="400" Content="Start Modbus Serial Rtu Slave" Click="StartModbusSerialRtuSlave"/>
-        <Button Grid.Row="2" Height="50" Margin="10" Width="400" Content="Serial Rtu Master WriteRegisters" Click="ModbusSerialRtuMasterWriteRegisters"/>
+        <GroupBox Margin="10" Grid.Row="1" Grid.Column="0" Header="Serial Rtu Master WriteRegisters Using COM Port" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Height="30" Text="Com Ports"/>
+                <ComboBox  Grid.Row="0" Grid.Column="1" Name="comPorts" Height="30" SelectedIndex="0"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Height="30" Text="Register Address"/>
+                <TextBox Grid.Row="1" Grid.Column="1"  Height="30" Text="100" Name="RegisterAddress3"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Height="30" Text="Register Values"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="RegisterValues3" />
+
+                <Button Grid.Row="4" Grid.ColumnSpan="2" Height="30" Width="200" Content="Write Using Com Port" Click="ModbusSerialRtuMasterWriteRegisters"/>
+
+            </Grid>
+        </GroupBox>
+
+        <!--<Button Grid.Row="1" Height="50" Width="400" Content="Start Modbus Serial Rtu Slave" Click="StartModbusSerialRtuSlave"/>-->
 
     </Grid>
 </Window>
