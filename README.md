@@ -14,13 +14,17 @@ This Modebus sample is the demonstration of how we can read and write into Regis
 ![ModBus Sample Application UI](ModbusWPF/Docs/Images/ModbusSampleUI.png)
 
 We can use Modbus Simulator [https://www.modbustools.com/modbus_slave.html](url) to test the sample.
+Here is the screenshot for configuring the  Modbus Slave Simulator.
+
  ![Screenshot](ModbusWPF/Docs/Images/SlaveConfiguration.png)
  
-This contains 3 sections. 
+This Sample application contains 3 sections. 
 
-- Socket Serial Master Read Registers
+- **Socket Serial Master Read Registers**
+  
   This is the example of reading values of Register's bit using Socket connection.
-  ![Screenshot](ModbusWPF/Docs/Images/Modbus TCP connection.png)
+  
+  ![Screenshot](ModbusWPF/Docs/Images/ModbusTCPconnection.png)
   
   ```C#
             using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -49,8 +53,10 @@ This contains 3 sections.
                 }
   ```
 
-- Socket Serial Master Write Registers
-  This is the example of Writing into Register's bit using Socket connection. 
+- **Socket Serial Master Write Registers**
+- 
+  This is the example of Writing into Register's bit using Socket connection.
+  
   ```C#
                 using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
@@ -72,9 +78,12 @@ This contains 3 sections.
   ![Screenshot](ModbusWPF/Docs/Images/SocketSerialMasterReadRegisters.png)
   
 
-- Serial Rtu Master WriteRegisters Using COM Port
+- **Serial Rtu Master WriteRegisters Using COM Port**
+  
    This is the example of writing values of Register's bit using SerialPort connection. We are passing COM port.
+  
    ![Screenshot](ModbusWPF/Docs/Images/ComportConnection.png)
+  
    ```C#
             using (port = new SerialPort(comPorts.SelectedItem.ToString()))
             {
