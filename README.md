@@ -8,6 +8,11 @@ According to WikiPedia...
 ## How does a MODBUS work?
 The devices which use MODBUS would communicate in a master/slave arrangement. In this type of communication, the master would communicate with one or multiple slaves. Mostly the master would be a PLC, PC, DCS, PAC, or RTU. The slaves are mostly the field devices, so in this configuration, the master would request to read or write a value. These values could be analog or digital, the slaves would respond to this request by giving the data to the master or by taking the action which is required. In case the slaves or Fieldbus wasn’t able to perform the requested action then the slave would create an error message and it would be transmitted to the master.
 
+## How is data stored in Standard Modbus?
+Information is stored in the Server device in four different tables. Two tables store on/off discrete values (coils) and two store numerical values (registers). The coils and registers each have a read-only table and read-write table. Each table has 9999 values. Each coil or contact is 1 bit and assigned a data address between 0000 and 270E. Each register is 1 word = 16 bits = 2 bytes and also has data address between 0000 and 270E.
+
+ ![Screenshot](ModbusWPF/Docs/Images/ModbusRegisterNumbers.jpeg)
+ 
 ## Modbus Sample
 This Modebus sample is the demonstration of how we can read and write into Registers using different Modbus communications types. 
 
