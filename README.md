@@ -18,11 +18,77 @@ We can use Modbus Simulator [https://www.modbustools.com/modbus_slave.html](url)
 This contains 3 sections. 
 
 - Socket Serial Master Write Registers
-  
-- Socket Serial Master Read Registers
-  
+  ```C#
+                using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    // configure socket
+                    var serverIP = IPAddress.Parse("127.0.0.1");
+                    var serverFullAddr = new IPEndPoint(serverIP, 502);
+                    sock.Connect(serverFullAddr);
+
+                    var factory = new ModbusFactory();
+                    IModbusMaster master = factory.CreateMaster(sock);
+
+                    byte slaveId = 1;
+                    ushort startAddress = ushort.Parse(RegisterAddress.Text);
+                    ushort value = ushort.Parse(RegisterValue.Text);
+                    master.WriteSingleRegister(slaveId, startAddress, value);          
+                }
+  ```
+ 
   ![Screenshot](ModbusWPF/Docs/Images/SocketSerialMasterReadRegisters.png)
   
+- Socket Serial Master Read Registers
+
+  ```C#
+            using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    // configure socket
+                    var serverIP = IPAddress.Parse("127.0.0.1");
+                    var serverFullAddr = new IPEndPoint(serverIP, 502);
+                    sock.Connect(serverFullAddr);
+
+                    var factory = new ModbusFactory();
+                    IModbusMaster master = factory.CreateMaster(sock);
+
+                    byte slaveId = 1;
+                    ushort startAddress = 100;
+                    ushort numInputs = ushort.Parse(numberOfPoints.Text);
+
+                    ushort[] registers = master.ReadHoldingRegisters(slaveId, startAddress, numInputs);
+
+                    var registersValues = string.Empty;
+                    for (int i = 0; i < numInputs; i++)
+                    {
+                        registersValues += $"{(startAddress + i)}={registers[i]},  ";
+                    }
+
+                    ReadRegisterValues.Text = registersValues;
+                }
+  ```
+
 - Serial Rtu Master WriteRegisters Using COM Port
+
+   ```C#
+            using (port = new SerialPort(comPorts.SelectedItem.ToString()))
+            {
+                // configure serial port
+                port.BaudRate = 9600;
+                port.DataBits = 8;
+                port.Parity = Parity.None;
+                port.StopBits = StopBits.One;
+                port.Open();
+
+                var factory = new ModbusFactory();
+                IModbusMaster master = factory.CreateRtuMaster(port);
+
+                byte slaveId = 1;
+                ushort startAddress = ushort.Parse(RegisterAddress3.Text);
+                var registerValues = RegisterValues3.Text;
+                ushort[] registers = registerValues.Split(',').Select(ushort.Parse).ToArray();  
+
+                master.WriteMultipleRegisters(slaveId, startAddress, registers);
+            }
+  ```
   
 
