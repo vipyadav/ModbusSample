@@ -18,6 +18,7 @@ We can use Modbus Simulator [https://www.modbustools.com/modbus_slave.html](url)
 This contains 3 sections. 
 
 - Socket Serial Master Write Registers
+  This is the example of Writing into Register's bit using Socket connection. 
   ```C#
                 using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
@@ -39,7 +40,8 @@ This contains 3 sections.
   ![Screenshot](ModbusWPF/Docs/Images/SocketSerialMasterReadRegisters.png)
   
 - Socket Serial Master Read Registers
-
+  This is the example of reading values of Register's bit using Socket connection.
+  
   ```C#
             using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
@@ -68,6 +70,7 @@ This contains 3 sections.
   ```
 
 - Serial Rtu Master WriteRegisters Using COM Port
+   This is the example of writing values of Register's bit using SerialPort connection. We are passing COM port.
 
    ```C#
             using (port = new SerialPort(comPorts.SelectedItem.ToString()))
